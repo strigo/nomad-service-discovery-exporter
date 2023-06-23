@@ -1,0 +1,40 @@
+name: default
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  # Required for Goreleaser
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repository
+        with:
+          # Fetch all history for all tags and branches
+          fetch-depth: 0
+
+      - uses: docker/login-action@v2
+        name: Login to GitHub Packages
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-go@v4
+        name: Setup Go
+        with:
+          go-version-file: 'go.mod'
+
+      - uses: goreleaser/goreleaser-action@v4
+        name: Run GoReleaser
+        with:
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
