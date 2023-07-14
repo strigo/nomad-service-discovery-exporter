@@ -1,9 +1,9 @@
 Nomad Service Health Exporter
 =============================
 Exports the health status of services registered to the native Nomad [service
-discovery](https://developer.hashicorp.com/nomad/docs/networking/service-discovery).
+discovery][1].
 
-This is a temporary solution until [nomad/issues/16602](https://github.com/hashicorp/nomad/issues/16602) is implemented.
+This is a temporary solution until [nomad/16602][2] is fixed/implemented.
 
 
 Compatability
@@ -21,3 +21,7 @@ Available Metrics
 -----------------
 * `nomad_services`: The total number of services registered.
 * `nomad_services_health`: Service health status.
+
+
+[1]: https://developer.hashicorp.com/nomad/docs/networking/service-discovery
+[2]: https://github.com/hashicorp/nomad/issues/16602
