@@ -11,11 +11,11 @@ import (
 )
 
 var (
-	BindAddr       = flag.String("bind", "127.0.0.1:9100", "Bind listen socket to this address")
+	BindAddr       = flag.String("bind", ":9100", "Bind listen socket to this address")
 	MetricsPath    = flag.String("path", "/metrics", "Path to export metrics at")
 	NomadAddr      = flag.String("addr", "http://127.0.0.1:4646", "Nomad address")
-	NomadNamespace = flag.String("namespace", "*", "Nomad namespace")
-	NomadRegion    = flag.String("region", "global", "Nomad region")
+	NomadNamespace = flag.String("namespace", "", "Nomad namespace")
+	NomadRegion    = flag.String("region", "", "Nomad region (defaults to the agent's region)")
 	NomadStale     = flag.Bool("stale", true, "Allow stale read results (disable with -no-stale)")
 
 	MaxDuration = flag.Duration("duration", time.Second*11, "Max scrape time limit (seconds)")
@@ -32,6 +32,7 @@ func main() {
 		&ExporterConfig{
 			Address:     *NomadAddr,
 			Region:      *NomadRegion,
+			Namespace:   *NomadNamespace,
 			Duration:    *MaxDuration,
 			AllowStale:  *NomadStale,
 			Parallelism: *Parallelism,
