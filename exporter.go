@@ -22,7 +22,7 @@ var (
 		prometheus.NewDesc(
 			"nomad_services",
 			"Number of services registers to Nomad native service discovery",
-			[]string{"nomad_namespace"},
+			[]string{"namespace"},
 			nil),
 		prometheus.GaugeValue,
 	}
@@ -31,7 +31,7 @@ var (
 		prometheus.NewDesc(
 			"nomad_services_health",
 			"Health status of a service registered to Nomad Service Discovery",
-			[]string{"nomad_namespace", "nomad_job_id", "nomad_task_name", "service_name", "check_name", "check_id", "status"},
+			[]string{"namespace", "job_id", "task_name", "service_name", "check_name", "check_id", "status"},
 			nil),
 		prometheus.GaugeValue,
 	}
@@ -71,6 +71,7 @@ func New(config *ExporterConfig) (*Exporter, error) {
 		Address:  config.Address,
 		Region:   config.Region,
 		SecretID: config.SecretID,
+		Namespace: config.Namespace,
 	})
 	if err != nil {
 		return nil, err
